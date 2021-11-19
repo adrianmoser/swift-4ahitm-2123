@@ -31,7 +31,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onclick(_ sender: UIButton) {
-        
+        let guess = Int(textField.text!)!
+        model.addGuessedNumber(guess: guess)
     }
     
     func compare(guessedString: String) -> Int! {
@@ -40,8 +41,8 @@ class ViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let resultViewController  = segue.destination as? ResultViewController
-        resultViewController?.model = model
+        let TableViewController  = segue.destination as? TableViewController
+        TableViewController?.model = model
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -52,14 +53,12 @@ class ViewController: UIViewController {
         return false
     }
     
-    func checkNumber() -> Bool{
-        if(Optional(guessedNumber) != nil){
-            print("")
-            guessedNumber = compare(guessedString: textField.text!)
+    func checkNumber() -> Bool {
+            let compareResult = compare(guessedString: textField.text!)
             
             let text: String?
             
-            switch guessedNumber{
+            switch compareResult{
             case -1:
                 text = "Your number is to low"
                 label.text = text
@@ -73,12 +72,6 @@ class ViewController: UIViewController {
                 label.text = text
                 return true
             }
-            
-            
-        }
         return false
     }
-
-
 }
-
